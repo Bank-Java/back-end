@@ -2,6 +2,7 @@ package controllers;
 import java.util.ArrayList;
 
 import models.Conta;
+import models.Extrato;
 
 public class ContaController {
 
@@ -89,13 +90,19 @@ public class ContaController {
 //	SACA O DINHEIRO DA CONTA
 	public static void sacar(Conta conta, double valor) {
 		
+		Extrato extrato = new Extrato("Saque", - valor, conta);		
+		ExtratoController.cadastrar(extrato, conta);
 		conta.setSaldo(conta.getSaldo() - valor);
+
 	}
 
 //	REALIZA O DEPOSITO NA CONTA
 	public static void depositar(Conta conta, double valorDeposito) {
 		
+		Extrato extrato = new Extrato("Depósito", + valorDeposito, conta);
+		ExtratoController.cadastrar(extrato, conta);
 		conta.setSaldo(conta.getSaldo() + valorDeposito);
+
 	}
 	
 }
