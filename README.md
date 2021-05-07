@@ -6,7 +6,6 @@ O projeto tem como objetivo a criação de um sistema de operações bancárias 
 
 Desenvolvido por:
 
-- Ana Carolina Simoni Ciampi
 
 - João Vitor Rodrigues Pereira
 
