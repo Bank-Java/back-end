@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import models.Cliente;
 
 public class ClienteController {
-
 	static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	
 	public static Boolean cadastrar(Cliente cliente) {

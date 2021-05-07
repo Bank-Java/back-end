@@ -1,17 +1,18 @@
 package models;
 
-//import java.util.ArrayList;
-
 public class Conta {
 
 	private String numeroConta;
 	private String senha;
 	private Double saldo;
-//	static ArrayList<String> extrato = new ArrayList<String>();
-		
+	
 //	GETTERS AND SETTERS
 	
-//		SETTERS
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
+	}
+
+		//		SETTERS
 		public void setSenha(String senha) {
 			this.senha = senha;
 		}
@@ -24,11 +25,6 @@ public class Conta {
 			this.saldo = saldo;
 		}
 		
-//		public void setExtrato(String comprovante) {
-//			this.extrato = comprovante;
-//		}
-	
-	
 //		GETTERS	
 		public String getNumeroConta() {
 			return numeroConta;
@@ -42,7 +38,4 @@ public class Conta {
 			return saldo;
 		}
 		
-//		public ArrayList<Comprovante> getExtrato(String comprovante) {
-//			return extrato;
-//		}
 }

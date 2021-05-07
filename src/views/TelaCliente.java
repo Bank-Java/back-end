@@ -32,7 +32,8 @@ public class TelaCliente {
 			System.out.println("(1) Saque");
 			System.out.println("(2) Depósito");
 			System.out.println("(3) Transferência");
-			System.out.println("(4) Atualização de dados");
+			System.out.println("(4) Extrato");
+			System.out.println("(5) Atualização de dados");
 			System.out.println("(0) Sair da Conta");
 			opcao = sc.nextShort();
 			
@@ -53,6 +54,11 @@ public class TelaCliente {
 				break;
 			}
 			case 4: {
+				
+				TelaExtrato.mostrarTela(conta);				
+				break;
+			}
+			case 5: {
 				
 				TelaAtualizacao.mostrarTela();				
 				break;

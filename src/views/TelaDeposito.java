@@ -30,6 +30,7 @@ public class TelaDeposito {
 		case 1: {
 			
 			ContaController.depositar(conta, deposito.getValorDeposito());
+			TelaComprovante.emitirComprovante("Depósito", deposito.getValorDeposito());
 			System.out.println("Depósito realizado com sucesso!");
 			return 1;
 		}

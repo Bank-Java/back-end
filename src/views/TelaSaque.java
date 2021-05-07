@@ -33,6 +33,7 @@ public class TelaSaque {
 			case 1: {
 				
 				ContaController.sacar(conta, saque.getValor());
+				TelaComprovante.emitirComprovante("Saque", saque.getValor());
 				System.out.println("Saque realizado com sucesso!");
 				return 1;
 			}

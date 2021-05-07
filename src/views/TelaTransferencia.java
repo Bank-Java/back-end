@@ -16,10 +16,8 @@ public class TelaTransferencia {
 		
 		transferencia = new Transferencia();
 		conta2 = new Conta();
-//		GUARDAR OBJETO TRANSFERENCIA DENTRO DO MODEL CONTA 
-		
+
 		System.out.println("\n -- CLIENTE - TRANSFERÊNCIA -- \n");
-		
 		System.out.println("Digite o valor da transferência:");
 		transferencia.setValor(sc.nextDouble());
 		
@@ -42,6 +40,12 @@ public class TelaTransferencia {
 				switch (opcao) {
 				case 1: {
 					TransferenciaController.transferir(conta, ContaController.buscarConta(conta2.getNumeroConta()), transferencia.getValor());
+					
+					TelaComprovante.emitirComprovante(
+						String.format("Transferência para %s", conta.getNumeroConta()),
+						transferencia.getValor()
+					);
+					
 					System.out.println("Transferência realizada com sucesso!");
 					break;
 				}
