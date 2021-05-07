@@ -4,9 +4,8 @@ import java.util.Date;
 
 import models.Cliente;
 import models.Conta;
-import controllers.ListaClientes;
+import controllers.ClienteController;
 import controllers.ContaController;
-import controllers.SenhaController;
 
 public class TelaCadastraCliente {
 		
@@ -15,7 +14,7 @@ public class TelaCadastraCliente {
 	static Conta conta;
 	
 	public static short mostrarTela() {
-	
+
 		cliente = new Cliente();
 		conta = new Conta();
 		cliente.setData(new Date());
@@ -44,7 +43,7 @@ public class TelaCadastraCliente {
 		
 		if(conta != null && ContaController.cadastrar(conta)) {
 			cliente.setConta(conta);
-			if (ListaClientes.cadastrar(cliente)) {
+			if (ClienteController.cadastrar(cliente)) {
 				System.out.println("Cliente cadastrado com sucesso.");
 			} else {
 				System.out.println("Não foi possível cadastrar esse cliente");

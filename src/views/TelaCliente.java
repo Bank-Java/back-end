@@ -1,7 +1,7 @@
 package views;
 import java.util.Scanner;
 
-import controllers.ListaClientes;
+import controllers.ClienteController;
 
 import models.Conta;
 import models.Cliente;
@@ -13,11 +13,11 @@ public class TelaCliente {
 	
 	public static short mostrarTela(Conta conta) {
 	
-		cliente = ListaClientes.buscarConta(conta.getNumeroConta());
 		short opcao;
 		
 		do {
-			
+			cliente = ClienteController.buscarConta(conta.getNumeroConta());
+
 			System.out.println("\n -- MENU - CLIENTE -- \n");
 			
 			System.out.println(" ------------------ ");
@@ -32,6 +32,7 @@ public class TelaCliente {
 			System.out.println("(1) Saque");
 			System.out.println("(2) Depósito");
 			System.out.println("(3) Transferência");
+			System.out.println("(4) Atualização de dados");
 			System.out.println("(0) Sair da Conta");
 			opcao = sc.nextShort();
 			
@@ -49,6 +50,11 @@ public class TelaCliente {
 			case 3: {
 				
 				TelaTransferencia.mostrarTela(conta);				
+				break;
+			}
+			case 4: {
+				
+				TelaAtualizacao.mostrarTela();				
 				break;
 			}
 			case 0: {

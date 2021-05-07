@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 import models.Cliente;
 
-public class ListaClientes {
+public class ClienteController {
 
 	static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	
@@ -47,7 +47,17 @@ public class ListaClientes {
 		return true;
 	}
 	
-//	
+	public static boolean atualizar(String nome, String cpf, String email, String endereco, String telefone,
+			String dataNascimento) {
+		for (int i = 0; i < clientes.size(); i++){
+			if(clientes.get(i).getCpf().equals(cpf)){
+				clientes.set(i, new Cliente(nome, clientes.get(i).getCpf(), email, endereco, telefone, dataNascimento, clientes.get(i).getConta())); 
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	static Cliente cliente;
 	public static Cliente buscarConta(String numeroConta) {
 		for (int i = 0; i < clientes.size(); i++) {

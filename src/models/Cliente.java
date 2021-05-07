@@ -14,6 +14,24 @@ public class Cliente {
 	
 //	GETTERS AND SETTERS
 	
+		public Cliente(String nome, String cpf, String email, String endereco, String telefone,
+			String dataNascimento, Conta conta) {
+			this.nome = nome;
+			this.cpf = cpf;
+			this.email = email;
+			this.endereco = endereco;
+			this.telefone = telefone;
+			this.dataNasc = dataNascimento;
+			this.data = new Date();
+			this.conta = conta;
+		}
+
+	
+		public Cliente() {
+			// TODO Auto-generated constructor stub
+		}
+
+
 		//		SETTERS
 		public void setConta(Conta conta) {
 			this.conta = conta;
@@ -80,4 +98,13 @@ public class Cliente {
 		public Date getData() {
 			return data;
 		}
+
+
+		@Override
+		public String toString() {
+			return "Cliente: " + nome + ", cpf: " + cpf + ", email: " + email + ", endereco: " + endereco
+					+ ", telefone: " + telefone + ", dataNasc: " + dataNasc + ", data: " + data;
+		}
+		
+
 }
