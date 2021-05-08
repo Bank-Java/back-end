@@ -4,44 +4,58 @@ import java.util.Scanner;
 import controllers.ContaController;
 
 import models.Conta;
-import models.Deposito;
+//import models.Deposito;
+import models.Comprovante;
 
 public class TelaDeposito {
 
-	static Deposito deposito;
+	static Comprovante comprovante;
 	static Scanner sc = new Scanner(System.in);
 	
-	public static short mostrarTela(Conta conta) {
+	public static short mostrarTela(Conta conta, String deposito) {
 	
-		deposito = new Deposito();
+		
+		short opcao; 
+		double valor; 
 		
 		System.out.println("\n -- CLIENTE - DEPÓSITO -- \n");
-		
-		System.out.println("Qual o valor a ser depositado:");
-		deposito.setValorDeposito(sc.nextDouble());
-		
-		System.out.println("Tem certeza que deseja depositar esse valor?");
-		System.out.println("(1) Sim");
-		System.out.println("(0) Não");
-		
-		sc.nextLine();
-		short opcao = sc.nextShort();
-		switch (opcao) {
-		case 1: {
+
+		do {
+
+			System.out.println("Qual o valor a ser depositado:");
+			valor = sc.nextDouble();
 			
-			ContaController.depositar(conta, deposito.getValorDeposito());
-			TelaComprovante.emitirComprovante("Depósito", deposito.getValorDeposito());
-			System.out.println("Depósito realizado com sucesso!");
-			return 1;
-		}
-		case 0: {
+			System.out.println("Tem certeza que deseja realizar o depósito nesse valor?");
+			System.out.println("(1) Sim, desejo realizar o depósito.");
+			System.out.println("(2) Não, desejo depositar outro valor.");
+			System.out.println("(0) Não. Voltar para Menu Cliente.");
 			
-			break;
-		}
-		default:
-			System.out.println("Valor inválido: " + opcao);
-		}
-		
+			sc.nextLine();
+			opcao = sc.nextShort();
+			
+			switch (opcao) {
+			case 1: {
+				
+				ContaController.depositar(conta, valor);
+				
+				comprovante = new Comprovante(deposito, valor);
+				conta.setExtrato(comprovante);
+				
+				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor());
+				return 1;
+			}
+			case 2: {
+				
+				break;
+			}
+			case 0: {
+				
+				break;
+			}
+			default:
+				System.out.println("Valor inválido: " + opcao);
+			}
+		} while (opcao != 0);
 		
 		return 0;
 	}
