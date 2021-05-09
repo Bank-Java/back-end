@@ -40,12 +40,12 @@ public class TelaCliente {
 			switch (opcao) {
 			case 1: {
 				
-				TelaSaque.mostrarTela(conta);
+				TelaSaque.mostrarTela(conta, "Saque");
 				break;
 			}
 			case 2: {
 
-				TelaDeposito.mostrarTela(conta);				
+				TelaDeposito.mostrarTela(conta, "Depósito");				
 				break;
 			}
 			case 3: {

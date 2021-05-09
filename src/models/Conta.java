@@ -1,10 +1,13 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Conta {
 
 	private String numeroConta;
 	private String senha;
 	private Double saldo;
+	private ArrayList<Comprovante> extrato = new ArrayList<Comprovante>();
 	
 //	GETTERS AND SETTERS
 	
@@ -25,6 +28,10 @@ public class Conta {
 			this.saldo = saldo;
 		}
 		
+		public void setExtrato(Comprovante comprovante) {
+			this.extrato.add(comprovante);
+		}
+		
 //		GETTERS	
 		public String getNumeroConta() {
 			return numeroConta;
@@ -36,6 +43,10 @@ public class Conta {
 		
 		public Double getSaldo() {
 			return saldo;
+		}
+		
+		public ArrayList<Comprovante> getExtrato() {
+			return extrato;
 		}
 		
 }
