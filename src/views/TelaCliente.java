@@ -1,4 +1,5 @@
 package views;
+
 import java.util.Scanner;
 
 import controllers.ClienteController;
@@ -16,6 +17,7 @@ public class TelaCliente {
 		short opcao;
 		
 		do {
+			
 			cliente = ClienteController.buscarConta(conta.getNumeroConta());
 
 			System.out.println("\n -- MENU - CLIENTE -- \n");
@@ -60,7 +62,7 @@ public class TelaCliente {
 			}
 			case 5: {
 				
-				TelaAtualizacao.mostrarTela();				
+				TelaAtualizacao.mostrarTela(conta);				
 				break;
 			}
 			case 0: {

@@ -1,12 +1,7 @@
 package views;
 
-//import java.util.Objects;
-//import java.util.Scanner;
-
-//import controllers.ExtratoController;
 import models.Conta;
 import models.Comprovante;
-//import models.Extrato;
 
 public class TelaExtrato {
 
@@ -19,22 +14,9 @@ public class TelaExtrato {
 			comprovante = conta.getExtrato().get(i);
 			if (comprovante != null) {
 				
-				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor());
-				System.out.println("\n");
+				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor(), comprovante.getData());
 			}
 		}
 	}
-	
-	
-/*	
-	public static void mostrarTela(Conta conta) {
-		System.out.println("\n-- Extrato --\n");
-		
-		for(Extrato ext : ExtratoController.listar()){
-			if(Objects.equals(ext.getConta(), conta)) {
-				System.out.println(ext.toString());				
-			}
-		}
-	}
-*/
+
 }

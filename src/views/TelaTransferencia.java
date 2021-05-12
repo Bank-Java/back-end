@@ -47,7 +47,8 @@ public class TelaTransferencia {
 					conta.setExtrato(comprovante);
 					
 					TelaComprovante.emitirComprovante(
-							String.format("Transferência para %s", cpf), -valor
+							String.format("Transferência para %s", cpf), 
+							comprovante.getValor(), comprovante.getData()
 					);
 					
 					System.out.println("Transferência realizada com sucesso!");

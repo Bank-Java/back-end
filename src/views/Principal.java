@@ -15,10 +15,11 @@ public class Principal {
 			System.out.println(" -------------------- ");
 			
 			System.out.println("\n -- MENU - PRINCIPAL -- \n");
-			System.out.println("(1) Cadastrar Cliente\r\n"
-					   + "(2) Entrar na Conta\r\n"
-					   + "(0) Sair\r\n");
+			System.out.println("(1) Cadastrar Cliente\r\n" +
+								"(2) Entrar na Conta\r\n" + 
+								"(0) Sair\r\n");
 			System.out.println("Digite a opção desejada: ");
+			
 			opcao = sc.nextInt();
 			sc.nextLine();
 			
@@ -31,33 +32,17 @@ public class Principal {
 				
 				TelaLogin.mostrarTela();
 				break;
-			case 3:
-				
-				break;
-			case 4:
-				
-				break;
-			case 5:
-				break;
-			case 6:
-				
-				break;
-			case 7:
-				break;
-			case 8:
-				
-				break;
 			case 0:
+				
 				System.out.println("\nEncerrando sistema.");
 				break;
 			default:
 				System.out.println("\nOpção inválida!");
 				break;
-			}			
+			}	
+			
 		} while (opcao != 0);
 		
 		sc.close();
-		
 	}
-
 }

@@ -9,13 +9,14 @@ public class Conta {
 	private Double saldo;
 	private ArrayList<Comprovante> extrato = new ArrayList<Comprovante>();
 	
-//	GETTERS AND SETTERS
-	
-	public void setSaldo(Double saldo) {
-		this.saldo = saldo;
+	public Conta() {
+		
+		this.saldo = 0.0;
 	}
+	
+//	GETTERS AND SETTERS
 
-		//		SETTERS
+//		SETTERS
 		public void setSenha(String senha) {
 			this.senha = senha;
 		}
