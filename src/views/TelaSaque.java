@@ -38,7 +38,7 @@ public class TelaSaque {
 				comprovante = new Comprovante(saque, -valor);
 				conta.setExtrato(comprovante);
 				
-				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor());
+				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor(), comprovante.getData());
 				
 				System.out.println("Saque realizado com sucesso!");
 				return 1;

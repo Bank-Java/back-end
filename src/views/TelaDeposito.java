@@ -4,7 +4,6 @@ import java.util.Scanner;
 import controllers.ContaController;
 
 import models.Conta;
-//import models.Deposito;
 import models.Comprovante;
 
 public class TelaDeposito {
@@ -14,7 +13,6 @@ public class TelaDeposito {
 	
 	public static short mostrarTela(Conta conta, String deposito) {
 	
-		
 		short opcao; 
 		double valor; 
 		
@@ -41,7 +39,7 @@ public class TelaDeposito {
 				comprovante = new Comprovante(deposito, valor);
 				conta.setExtrato(comprovante);
 				
-				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor());
+				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor(), comprovante.getData());
 				return 1;
 			}
 			case 2: {

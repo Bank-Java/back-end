@@ -1,62 +1,32 @@
 package controllers;
 import java.util.ArrayList;
 
+import models.Cliente;
 import models.Conta;
-import models.Extrato;
 
 public class ContaController {
-
-	static Conta conta;
-	public static ArrayList<Conta> contas = new ArrayList<Conta>();
 	
-	public static ArrayList<Conta> listaConta() {
+	static ArrayList<Cliente> clientes = ClienteController.clientes;
+	
+//	VERIFICA SE AS SENHAS SAO IGUAIS
+	public static Boolean verificarSenha(String senha2, String senha) {
 		
-		return contas;
-	}
-	
-	public static boolean cadastrar(Conta conta) {
-		if(contas.isEmpty()) {
-			contas.add(conta);
+		if (senha2.equals(senha)) {
+			
 			return true;
-		}
-				
-		if(ContaController.validar(conta)) {
-			contas.add(conta);
-			return true;			
-		} else {
-			return false;
-		}
-	}
-	
-	public static boolean validar(Conta conta) {
-		for(Conta contaCadastrado : contas){
-			if(contaCadastrado.getNumeroConta().equals(conta.getNumeroConta())) {
-				return false;
-			} 
-		}
-		
-		return true;
-	}
-	
-//	AUTENTICACAO DA CONTA - TELA DE LOGIN
-	public static Boolean autenticarConta(Conta contaLogin) {
-		
-		for (int i = 0; i < contas.size(); i++) {
-			if (contas.get(i).getNumeroConta().equals(contaLogin.getNumeroConta()) ) {
-				
-				return true;
-			}
-		}
+		}	
 		
 		return false;
 	}
-	
+
 //	RETORNA UM OBJETO CONTA PARA TelaLogin
-	public static Conta buscarConta(String numeroConta) {
-		for (int i = 0; i < contas.size(); i++) {
-			if (contas.get(i).getNumeroConta().equals(numeroConta)) {
+	public static Conta buscarConta(String cpf) {
+		
+		for (int i = 0; i < clientes.size(); i++) {
+			
+			if (clientes.get(i).getConta().getNumeroConta().equals(cpf)) {
 				
-				return contas.get(i);
+				return clientes.get(i).getConta();
 			}
 		}
 		
@@ -66,8 +36,9 @@ public class ContaController {
 //	CHECA SE A CONTA QUE VAI RECEBER A TRANSFERENCIA EXISTE
 	public static Boolean checarConta(String numeroConta) {
 		
-		for(int i = 0; i < contas.size(); i++) {
-			if (contas.get(i).getNumeroConta().equals(numeroConta) ) {
+		for(int i = 0; i < clientes.size(); i++) {
+			
+			if (clientes.get(i).getConta().getNumeroConta().equals(numeroConta) ) {
 				
 				return true;
 			}
@@ -89,17 +60,13 @@ public class ContaController {
 	
 //	SACA O DINHEIRO DA CONTA
 	public static void sacar(Conta conta, double valor) {
-		
-//		Extrato extrato = new Extrato("Saque", - valor, conta);		
-//		ExtratoController.cadastrar(extrato, conta);
+
 		conta.setSaldo(conta.getSaldo() - valor);
 	}
 
 //	REALIZA O DEPOSITO NA CONTA
 	public static void depositar(Conta conta, double valorDeposito) {
-		
-//		Extrato extrato = new Extrato("Depósito", + valorDeposito, conta);
-//		ExtratoController.cadastrar(extrato, conta);
+
 		conta.setSaldo(conta.getSaldo() + valorDeposito);
 	}
 	

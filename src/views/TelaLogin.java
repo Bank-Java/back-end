@@ -1,18 +1,20 @@
 package views;
 import java.util.Scanner;
 
-import models.Conta;
+import controllers.ClienteController;
 import controllers.ContaController;
+
+import models.Conta;
 
 public class TelaLogin {
 	
-	static Conta contaLogin;
 	static Conta conta;
 	static Scanner sc = new Scanner(System.in);
 	
 	public static short mostrarTela() {
 		
-		contaLogin = new Conta();
+		String cpf;
+		String senha;
 		short opcao;
 		
 		do {
@@ -20,26 +22,26 @@ public class TelaLogin {
 			System.out.println("\n -- LOG IN -- \n");
 			
 			System.out.println("Deseja:");
-			System.out.println("(1) Entrar na Conta");
+			System.out.println("(1) Entrar em uma Conta");
 			System.out.println("(0) Voltar para Menu Principal");
 			
 			opcao = sc.nextShort();
+			sc.nextLine();
+			
 			switch (opcao) {
 			case 1: {
-//			OPCAO 1 FAZ AUTENTICACAO DA CONTA
-				sc.nextLine();
 				
-				System.out.println("Digite o número da sua conta:");
-				contaLogin.setNumeroConta(sc.nextLine());
+				System.out.println("Digite o número da sua conta (CPF):");
+				cpf = sc.nextLine();
 				
 				System.out.println("Digite sua senha:");
-				contaLogin.setSenha(sc.nextLine());
+				senha = sc.nextLine();
 				
-				
-				if (ContaController.autenticarConta(contaLogin)) {
-//				CHECA SE ALGUMA CONTA DA LISTA É IGUAL CONTA DO LOGIN
+				if (ClienteController.autenticarContaCliente(cpf, senha)) {
+//				CHECA SE EXISTE UM CLIENTE COM ESSA CONTA
 					
-					conta = ContaController.buscarConta(contaLogin.getNumeroConta());
+					conta = ContaController.buscarConta(cpf);
+					
 					TelaCliente.mostrarTela(conta);
 					return 1;
 				} else {
@@ -50,7 +52,7 @@ public class TelaLogin {
 			}
 			case 0: {
 				
-				return 1;
+				break;
 			}
 			
 			default:
