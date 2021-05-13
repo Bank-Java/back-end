@@ -17,6 +17,7 @@ public class Principal {
 			System.out.println("\n -- MENU - PRINCIPAL -- \n");
 			System.out.println("(1) Cadastrar Cliente\r\n" +
 								"(2) Entrar na Conta\r\n" + 
+								"(3) Excluir cadastro\r\n" +
 								"(0) Sair\r\n");
 			System.out.println("Digite a opção desejada: ");
 			
@@ -31,6 +32,10 @@ public class Principal {
 			case 2:
 				
 				TelaLogin.mostrarTela();
+				break;
+			case 3:
+				
+				TelaExcluir.mostrarTela();
 				break;
 			case 0:
 				
