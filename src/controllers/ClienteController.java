@@ -12,6 +12,18 @@ public class ClienteController {
 
 		clientes.add(cliente);
 	}
+
+// EXCLUIR CADASTRO DO CLIENTE
+	public static boolean excluir(String cpf) {
+		for(int i = 0; i < clientes.size(); i++){
+	        if(cpf.equals(clientes.get(i).getCpf()) && clientes.get(i).getConta().getSaldo() == 0){
+	            clientes.remove(clientes.get(i));
+	            return true;
+	        }
+	    }
+		
+		return false;
+	}
 	
 //	AUTENTICACAO DO CPF, PARA QUE NAO EXISTA OUTRO CLIENTE IGUAL
 	public static Boolean autenticarCpf(String cpf) {
