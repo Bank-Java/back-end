@@ -3,34 +3,32 @@ package views;
 import java.util.Scanner;
 
 import controllers.ContaController;
-
-import models.Conta;
 import models.Cliente;
+import models.Conta;
+import utils.Console;
 
-public class TelaCadastraConta {
+public class TelaCadastraConta 
+{
+	private static Scanner sc = new Scanner(System.in);
+	private static ContaController controller = ContaController.retornarInstancia();
+	private static Conta conta; 
 	
-	static Scanner sc = new Scanner(System.in);
-	static Conta conta;
-	
-	public static Boolean mostrarTela(Cliente cliente, String cpf) {
+	public static boolean mostrarTela(Cliente cliente, String cpf) 
+	{
+		conta = new Conta(cpf);
+		int opcao;
 		
-		conta = new Conta();
-		conta.setNumeroConta(cpf);
-		short opcao;
-		
-		System.out.println("\n-- CADASTRAR CONTA --\n");
+		Console.imprimirCabecalho("-- CADASTRAR CONTA --\n");
 		
 		do {
 			
-			System.out.println("Continuar o cadastro da conta do cliente?");
-			System.out.println("(1) Sim");
-			System.out.println("(0) Não");
-			System.out.println("Digite a opção que deseja:");
+			opcao = Console.lerInteiro("Para continuar o cadastro, uma conta corrente deve ser criada.\n" + 
+											"Tem certeza que deseja continuar o cadastro?\n" + 
+											"(1) Sim\n" + 
+											"(0) Não");
 			
-			opcao = sc.nextShort();
-			sc.nextLine();
-			
-			switch (opcao) {
+			switch (opcao) 
+			{
 			case 1: {
 				
 				System.out.println("Digite uma senha para a conta:");
@@ -38,11 +36,13 @@ public class TelaCadastraConta {
 				
 				System.out.println("Digite a senha novamente:");
 				  
-				if (ContaController.verificarSenha(sc.nextLine(), conta.getSenha())) {
-					
-					cliente.setConta(conta);
+				if (controller.verificarSenha(sc.nextLine(), conta.getSenha())) {
 					
 					System.out.println("Senha válida!");
+					
+					cliente.setConta(conta);
+					controller.cadastrarConta(cliente.getConta());
+					
 					return true;
 				} else {
 					
@@ -53,6 +53,7 @@ public class TelaCadastraConta {
 			}
 			case 0: {
 				
+				System.out.println("Voltando para o Menu Principal...");
 				break;
 			}
 			default:
@@ -62,4 +63,5 @@ public class TelaCadastraConta {
 		
 		return false;
 	}
+
 }

@@ -1,20 +1,11 @@
 package models;
-import java.util.Date;
 
-public class Cliente {
-	
-	private String nome;
-	private String cpf;
-	private String email;
-	private String endereco;
-	private String telefone;
-	private String dataNasc;
-	private Date data;
-	private Conta conta;
-	
+public class Cliente 
+{
 //	CONSTRUTOR USADO PARA ATUALIZAR CLIENTE
 	public Cliente(String nome, String cpf, String email, String endereco, String telefone,
-			String dataNascimento, Conta conta) {
+			String dataNascimento, Conta conta) 
+	{
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
@@ -26,8 +17,16 @@ public class Cliente {
 	
 	public Cliente() {
 		
-		this.data = new Date();
 	}
+	
+	private String nome;
+	private String cpf;
+	private String email;
+	private String endereco;
+	private String telefone;
+	private String dataNasc;
+	private Conta conta;
+	
 	
 //	GETTERS AND SETTERS
 
@@ -60,10 +59,6 @@ public class Cliente {
 			this.dataNasc = dataNasc;
 		}
 		
-		public void setData(Date data) {
-			this.data = data;
-		}
-		
 //		GETTERS
 		public Conta getConta() {
 			return conta;
@@ -93,14 +88,9 @@ public class Cliente {
 			return dataNasc;
 		}
 		
-		public Date getData() {
-			return data;
-		}
-
-		
 		@Override
 		public String toString() {
 			return "Cliente: " + nome + ", cpf: " + cpf + ", email: " + email + ", endereco: " + endereco
-					+ ", telefone: " + telefone + ", dataNasc: " + dataNasc + ", data: " + data;
+					+ ", telefone: " + telefone + ", dataNasc: " + dataNasc;
 		}
 }

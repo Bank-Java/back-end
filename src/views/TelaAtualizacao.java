@@ -3,65 +3,66 @@ package views;
 import java.util.Scanner;
 
 import controllers.ClienteController;
-
 import models.Conta;
+import utils.Console;
 
-public class TelaAtualizacao {
+public class TelaAtualizacao 
+{
+	private static Scanner sc = new Scanner(System.in);
+	private static ClienteController controller = ClienteController.retornarInstacia();
 	
-	static Scanner sc = new Scanner(System.in);
-	
-	public static Boolean mostrarTela(Conta conta) {
+	public static void mostrarTela(Conta conta) 
+	{
+		int opcao; 
 		
-		short opcao; 
-		
-		System.out.println("\n-- ATUALIZAR CLIENTE --\n");
-		
-		do {
-
-			System.out.println("Tem certeza que deseja atualizar os dados cadastrados?");
-			System.out.println("(1) Sim. Atualizar!");
-			System.out.println("(0) Não. Voltar para o Menu Cliente.");
+		do 
+		{
+			Console.imprimirCabecalho("-- ATUALIZAR CLIENTE --\n");
 			
-			opcao = sc.nextShort();
-			sc.nextLine();
+			opcao = Console.lerInteiro("Tem certeza que deseja atualizar os dados cadastrados?\n" +
+					"(1) Sim.\n" +
+					"(0) Não. Voltar para o Menu Cliente.");
 		
-			switch (opcao) {
+			switch (opcao) 
+			{
 			case 1: {
 				
 				System.out.println("Digite o seu CPF para realizar a verificação:");
-				String cpf = (sc.nextLine());
+				String cpf = sc.nextLine();
 				
-				if (conta.getNumeroConta().equals(cpf)) {
-					
-					System.out.println("Digite o nome para atualizar:");
+				if (conta.getNumeroConta().equals(cpf)) 
+				{
+					System.out.println("\nDigite o nome para atualizar:");
 					String nome = sc.nextLine();
 					
-					System.out.println("Digite o email para atualizar:");
+					System.out.println("\nDigite o email para atualizar:");
 					String email = sc.nextLine();
 					
-					System.out.println("Digite o endereço para atualizar:");
+					System.out.println("\nDigite o endereço para atualizar:");
 					String endereco = sc.nextLine();
 					
-					System.out.println("Digite o telefone para atualizar:");
+					System.out.println("\nDigite o telefone para atualizar:");
 					String telefone = sc.nextLine();
 					
-					System.out.println("Digite a data de nascimento para atualizar:");
+					System.out.println("\nDigite a data de nascimento para atualizar:");
 					String dataNascimento = sc.nextLine();
 					
-					if(ClienteController.atualizar(nome, cpf, email, endereco, telefone, dataNascimento)) {
-						
-						System.out.println("Cliente atualizado com sucesso.");
-					} else {
-						
+					if(controller.atualizar(nome, cpf, email, endereco, telefone, dataNascimento)) 
+					{
+						System.out.println("Cliente atualizado com sucesso!");
+						opcao = 0;
+					} 
+					else 
+					{
 						System.out.println("Não foi possível atualizar esse cliente.");
 					}
-				} else {
-					
+				} 
+				else 
+				{
 					System.out.println("CPF inválido.");
-					return false;
 				}
 				
-				return true;
+				break;
 			}
 			case 0: {
 				
@@ -72,7 +73,5 @@ public class TelaAtualizacao {
 			}
 			
 		} while(opcao != 0);
-		
-		return false;
 	}
 }

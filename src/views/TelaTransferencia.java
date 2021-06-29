@@ -1,75 +1,69 @@
 package views;
+
 import java.util.Scanner;
 
 import controllers.ContaController;
-import controllers.TransferenciaController;
-
+import models.ComprovanteContaCorrente;
 import models.Conta;
-import models.Comprovante;
+import models.Transferencia;
+import utils.Console;
 
-public class TelaTransferencia {
-
-	static Scanner sc = new Scanner(System.in);
-	static Comprovante comprovante;
+public class TelaTransferencia 
+{
+	private static Scanner sc = new Scanner(System.in);
+	private static ContaController controller = ContaController.retornarInstancia();
+	private static Transferencia transferencia;
+	private static ComprovanteContaCorrente comprovante;
 	
-	public static short mostrarTela(Conta conta) {
+	public static void mostrarTela(Conta conta) 
+	{
+		transferencia = new Transferencia();
+		int opcao;
 		
-		double valor;
-		String cpf;
-
-		System.out.println("\n -- CLIENTE - TRANSFERÊNCIA -- \n");
-		
-		System.out.println("Digite o valor da transferência:");
-		valor = sc.nextDouble();
-		sc.nextLine();
-		
-		if (ContaController.checarSaldo(conta, valor)) { 
-//		CHECAR SE SALDO É SUFICIENTE
+		do
+		{
+			Console.imprimirCabecalho("-- CONTA - TRANFERÊNCIA --\n" +
+					"Para realizar a transferência, preencha as informações abaixo.\n" +
+					"Número da conta: ");
+			transferencia.setTransferenciaPara(sc.next());
+			transferencia.setTransferenciaDe(conta.getNumeroConta());
 			
-			System.out.println("Para qual conta deseja transferir (CPF):");
-			cpf = sc.nextLine();
-						
-			if (ContaController.buscarConta(cpf) != null) {
-//			CHECA SE A CONTA PARA QUAL VAI SER TRANSFERIDA EXISTE
-
-				System.out.println("Deseja mesmo realizar a tranferência?");
-				System.out.println("(1) Sim, desejo realizar a tranferência.");
-				System.out.println("(0) Não. Voltar para o Menu Cliente.");
-				
-				short opcao = sc.nextShort();
-				
-				switch (opcao) {
-				case 1: {
+			System.out.println("Qual o valor da transferência?");
+			transferencia.setValor(sc.nextDouble());
+			
+			opcao = Console.lerInteiro("Tem certeza que deseja realizar a transferência?\n" +
+					"(1) Sim, realizar transferência.\n" +
+					"(0) Não, voltar para o Mene Cliente.");
+			
+			switch (opcao) 
+			{
+			case 1: {
+				if(controller.verificarConta(transferencia.getTransferenciaPara()) && 
+						controller.checarSaldo(conta, transferencia.getValor()))
+				{
+					comprovante = new ComprovanteContaCorrente(transferencia);
+					conta.setComprovante(comprovante);
 					
-					TransferenciaController.transferir(conta, ContaController.buscarConta(cpf), valor);
+					controller.transferir(conta, transferencia.getTransferenciaPara(), transferencia.getValor());
 					
-					comprovante = new Comprovante(String.format("Transferência para %s", cpf), -valor);
-					conta.setExtrato(comprovante);
-					
-					TelaComprovante.emitirComprovante(
-							String.format("Transferência para %s", cpf), 
-							comprovante.getValor(), comprovante.getData()
-					);
-					
-					System.out.println("Transferência realizada com sucesso!");
-					return 1;
+					System.out.println(comprovante);
+					opcao = 0;
 				}
-				case 0: {
-					
-					break;
+				else
+				{
+					System.out.println("Problemas com o número da conta ou com o valor da transferência." +
+							"Verifique se existe uma conta com esse número e se o saldo é suficiente.");
 				}
-				default:
-					System.out.println("Valor inválido: " + opcao);
-				}
-			} else {
 				
-				System.out.println("A conta digitada não existe.");
+				break;
 			}
-		} else {
-			
-			System.out.println("Saldo em conta insuficiente.");
-		}
-		
-		return 0;
+			case 0: {
+				
+				break;
+			}
+			default:
+				System.out.println("Valor inválido: " + opcao);			
+			}
+		}while(opcao!=0);
 	}
 }

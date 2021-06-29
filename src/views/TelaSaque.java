@@ -1,59 +1,57 @@
 package views;
+
 import java.util.Scanner;
 
 import controllers.ContaController;
-
+import models.ComprovanteContaCorrente;
 import models.Conta;
-import models.Comprovante;
+import models.Saque;
+import utils.Console;
 
-public class TelaSaque {
+public class TelaSaque 
+{
+	private static Scanner sc = new Scanner(System.in);
+	private static ContaController controller = ContaController.retornarInstancia();
+	private static Saque saque;
+	private static ComprovanteContaCorrente comprovante;
 	
-	static Conta conta;
-	static Comprovante comprovante;
-	static Scanner sc = new Scanner(System.in);
-
-	public static short mostrarTela(Conta conta, String saque) {
+	public static void mostrarTela(Conta conta) 
+	{
+		saque = new Saque();
+		int opcao;
 		
-		double valor;
-		
-		System.out.println("\n -- CLIENTE - SAQUE -- \n");
-		
-		System.out.println("Qual o valor a ser sacado?");
-		valor = sc.nextDouble();
-		
-		if (ContaController.checarSaldo(conta, valor)) {
+		Console.imprimirCabecalho("-- CONTA - SAQUE --\n\n" +
+				"Qual o valor a ser sacado?");
+		saque.setValor(sc.nextDouble()); 
 			
-			System.out.println("Tem certeza que deseja sacar esse valor?");
-			System.out.println("(1) Sim, realizar o saque.");
-			System.out.println("(0) Não. Voltar para o Menu Cliente.");
+		opcao = Console.lerInteiro("Tem certeza que deseja sacar esse valor?\n" +
+				"(1) Sim. Realizar o saque.\n" +
+				"(0) Não. Voltar para o Menu Cliente.");
+		
+		switch (opcao) {
+		case 1: {
 			
-			sc.nextLine();
-			short opcao = sc.nextShort();
-			
-			switch (opcao) {
-			case 1: {
+			if (controller.checarSaldo(conta, saque.getValor())) 
+			{
+				comprovante = new ComprovanteContaCorrente(saque);
+				conta.setComprovante(comprovante);
 				
-				ContaController.sacar(conta, valor);
-				
-				comprovante = new Comprovante(saque, -valor);
-				conta.setExtrato(comprovante);
-				
-				TelaComprovante.emitirComprovante(comprovante.getTipo(), comprovante.getValor(), comprovante.getData());
-				
-				System.out.println("Saque realizado com sucesso!");
-				return 1;
+				controller.sacar(conta, saque.getValor());
+				System.out.println(comprovante);
+			} 
+			else 
+			{
+				System.out.println("Saldo em conta insuficiente");
 			}
-			case 0: {
-				
-				break;
-			}
-			default:
-				System.out.println("Valor inválido: " + opcao);
-			}
-		} else {
 			
-			System.out.println("Saldo em conta insuficiente");
+			break;
 		}
-		return 0;
+		case 0: {
+			
+			break;
+		}
+		default:
+			System.out.println("Valor inválido: " + opcao);
+		}
 	}
 }

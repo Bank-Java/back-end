@@ -3,25 +3,25 @@ package views;
 import java.util.Scanner;
 
 import controllers.ContaController;
-import models.ComprovanteContaCorrente;
+import models.ComprovanteContaPoupanca;
 import models.Conta;
-import models.Deposito;
+import models.DepositoEmPoupanca;
 import utils.Console;
 
-public class TelaDeposito 
+public class TelaDepositoPoupanca 
 {
 	private static Scanner sc = new Scanner(System.in);
 	private static ContaController controller = ContaController.retornarInstancia();
-	private static Deposito deposito;
-	private static ComprovanteContaCorrente comprovante;
+	private static ComprovanteContaPoupanca comprovante;
+	private static DepositoEmPoupanca deposito;
 	
 	public static void mostrarTela(Conta conta) 
 	{
-		deposito = new Deposito();
+		deposito = new DepositoEmPoupanca();
 		int opcao;
 		int opcao2;
 		
-		Console.imprimirCabecalho("-- CONTA - DEPÓSITO --\n\n" +
+		Console.imprimirCabecalho("-- CONTA - DEPÓSITO POUPANÇA --\n\n" +
 				"Qual o valor a ser depositado?");
 		deposito.setValor(sc.nextDouble()); 
 		
@@ -50,10 +50,10 @@ public class TelaDeposito
 					deposito.setMetodo("Cheque");
 			} while(opcao<1 || opcao>3);
 			
-			comprovante = new ComprovanteContaCorrente(deposito);
+			comprovante = new ComprovanteContaPoupanca(deposito);
 			conta.setComprovante(comprovante);
 			
-			controller.depositar(conta, deposito.getValor());
+			controller.depositarEmPoupanca(conta, deposito.getValor());
 			
 			System.out.println(comprovante);
 			break;
@@ -66,4 +66,5 @@ public class TelaDeposito
 			System.out.println("Valor inválido: " + opcao);
 		}
 	}
+
 }

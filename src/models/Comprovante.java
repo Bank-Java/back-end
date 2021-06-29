@@ -1,29 +1,15 @@
 package models;
 
-import java.util.Date;
+public abstract class Comprovante 
+{
+	private StringBuilder msg;
 
-public class Comprovante {
-
-	private String tipo;
-	private double valor;
-	private Date data;
-	
-	public Comprovante(String tipo, double valor) {
-		this.tipo = tipo;
-		this.valor = valor;
-		this.data = new Date();
+	public String getMsg() {
+		return msg.toString();
+	}
+	public void setMsg(StringBuilder msg) {
+		this.msg = msg;
 	}
 	
-	public String getTipo() {
-		return tipo;
-	}
-	
-	public double getValor() {
-		return valor;
-	}
-	
-	public Date getData() {
-		return data;
-	}
-	
+	public abstract String toString();
 }

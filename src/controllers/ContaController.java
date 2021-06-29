@@ -1,73 +1,139 @@
 package controllers;
+
 import java.util.ArrayList;
 
-import models.Cliente;
+import models.ComprovanteContaCorrente;
 import models.Conta;
+import models.Transferencia;
 
-public class ContaController {
+public class ContaController implements IContaController
+{
+	private static ContaController controller;
 	
-	static ArrayList<Cliente> clientes = ClienteController.clientes;
+	public static ContaController retornarInstancia()
+	{
+		if(controller == null)
+			return controller = new ContaController();
+		return controller;
+	}
 	
-//	VERIFICA SE AS SENHAS SAO IGUAIS
-	public static Boolean verificarSenha(String senha2, String senha) {
+	private ArrayList<Conta> contas = new ArrayList<Conta>();
+	private ComprovanteContaCorrente comprovante;
+	private Transferencia transferencia;
+	
+	public void cadastrarConta(Conta conta)
+	{
+		contas.add(conta);
+	}
+	
+	public Boolean autenticarConta(String cpf, String senha)
+	{
+		if(verificarSeVazio())			
+			return false;
 		
-		if (senha2.equals(senha)) {
+		for (Conta conta : contas) 
+		{
+			if(conta.getNumeroConta().equals(cpf) 
+					&& conta.getSenha().equals(senha))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Boolean verificarConta(String cpf)
+	{
+		for (Conta conta : contas) {
+			if(conta.getNumeroConta().equals(cpf))
+				return true;
+		}
+		return false;
+	}
+	
+	public Boolean verificarSenha(String senhaAutenticacao, String senha) 
+	{	
+		if (senhaAutenticacao.equals(senha)) {
 			
 			return true;
 		}	
 		
 		return false;
 	}
-
-//	RETORNA UM OBJETO CONTA PARA TelaLogin
-	public static Conta buscarConta(String cpf) {
-		
-		for (int i = 0; i < clientes.size(); i++) {
-			
-			if (clientes.get(i).getConta().getNumeroConta().equals(cpf)) {
-				
-				return clientes.get(i).getConta();
-			}
+	
+	public Conta buscarConta(String cpf)
+	{
+		for (Conta conta : contas) 
+		{
+			if(conta.getNumeroConta().equals(cpf))
+				return conta;
 		}
-		
 		return null;
 	}
 	
-//	CHECA SE A CONTA QUE VAI RECEBER A TRANSFERENCIA EXISTE
-	public static Boolean checarConta(String numeroConta) {
-		
-		for(int i = 0; i < clientes.size(); i++) {
-			
-			if (clientes.get(i).getConta().getNumeroConta().equals(numeroConta) ) {
-				
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-//	CHECA O SALDO DA CONTA
-	public static Boolean checarSaldo(Conta conta, double valor) {
-		
-		if (conta.getSaldo() >= valor) {
-			
+	public Boolean verificarSeVazio()
+	{
+		if(contas.isEmpty())
+		{
 			return true;
 		}
-		
 		return false;
 	}
 	
-//	SACA O DINHEIRO DA CONTA
-	public static void sacar(Conta conta, double valor) {
-
-		conta.setSaldo(conta.getSaldo() - valor);
-	}
-
-//	REALIZA O DEPOSITO NA CONTA
-	public static void depositar(Conta conta, double valorDeposito) {
-
-		conta.setSaldo(conta.getSaldo() + valorDeposito);
+	public boolean checarSaldo(Conta conta, double valor)
+	{
+		if(conta.getSaldoCorrente() >= valor)
+			return true;
+		return false;
 	}
 	
+	public boolean checarSaldoPoupanca(Conta conta, double valor)
+	{
+		if(conta.getSaldoPoupanca() >= valor)
+			return true;
+		return false;
+	}
+	
+	public void depositar(Conta conta, double valor) 
+	{
+		conta.setSaldoCorrente(conta.getSaldoCorrente() + valor);
+	}
+
+	public void sacar(Conta conta, double valor)
+	{
+		conta.setSaldoCorrente(conta.getSaldoCorrente() - valor);
+	}
+
+	public void transferir(Conta conta, String cpfConta2, double valor) 
+	{
+		Conta conta2 = buscarConta(cpfConta2);
+		transferencia = new Transferencia();
+		
+		transferencia.setTransferenciaDe(conta.getNumeroConta());
+		transferencia.setTransferenciaPara(cpfConta2);
+		transferencia.setValor(valor);
+		
+		comprovante = new ComprovanteContaCorrente(transferencia);
+		
+		conta2.setComprovante(comprovante);
+		conta.setSaldoCorrente(conta.getSaldoCorrente() - valor);
+		conta2.setSaldoCorrente(conta2.getSaldoCorrente() + valor);
+	}
+	
+	public void depositarEmPoupanca(Conta conta, double valor)
+	{
+		conta.setSaldoPoupanca((conta.getSaldoPoupanca() + valor) * 1.11);
+	}
+	
+	public void realizarResgate(Conta conta, double valor)
+	{
+		conta.setSaldoPoupanca(conta.getSaldoPoupanca() - valor);
+		conta.setSaldoCorrente(conta.getSaldoCorrente() + valor);
+	}
+	
+	public void realizarAplicacao(Conta conta, double valor)
+	{
+		conta.setSaldoCorrente(conta.getSaldoCorrente() - valor);
+		conta.setSaldoPoupanca((conta.getSaldoPoupanca() + valor) * 1.11);
+	}
 }
