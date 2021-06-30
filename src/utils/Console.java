@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 import models.Cliente;
 import models.Conta;
@@ -8,6 +9,7 @@ import models.Conta;
 public class Console 
 {
 	private static Scanner sc = new Scanner(System.in);
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	public static int lerInteiro(String msg) 
 	{
@@ -41,8 +43,8 @@ public class Console
 		System.out.println("Email: " + cliente.getEmail());
 		System.out.println("Endereço: " + cliente.getEndereco());
 		System.out.println("Telefone: " + cliente.getTelefone());
-		System.out.println("Saldo em conta corrente: " + conta.getSaldoCorrente());
-		System.out.println("Saldo em conta poupança: " + conta.getSaldoPoupanca());
+		System.out.println("Saldo em conta corrente: " + df2.format(conta.getSaldoCorrente()));
+		System.out.println("Saldo em conta poupança: " + df2.format(conta.getSaldoPoupanca()));
 		System.out.println(" ------------------ \n");	
 	}
 	
